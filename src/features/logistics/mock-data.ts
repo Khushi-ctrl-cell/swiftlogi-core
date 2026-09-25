@@ -62,6 +62,14 @@ export const moduleDefinitions: Record<string, ModuleDefinition> = {
   "Audit Logs": { title: "Audit Logs", description: "Trace sensitive actions and configuration changes across operations.", columns: [{ key: "user", label: "User" }, { key: "action", label: "Action" }, { key: "module", label: "Module" }, { key: "record", label: "Record" }, { key: "change", label: "Change" }, { key: "timestamp", label: "Timestamp" }, { key: "device", label: "IP / Device" }], records: [{ user: "Operations Admin", action: "Updated", module: "Courier Rates", record: "DLV-01", change: "Zone C: ₹54 → ₹56", timestamp: "25 Sep, 10:31", device: "10.20.8.16 · Chrome" }, { user: "Finance Manager", action: "Approved", module: "Wallet", record: "TXN-89221", change: "Pending → Completed", timestamp: "25 Sep, 10:12", device: "10.20.8.22 · Edge" }] },
 };
 
+export function getModuleDefinition(name: string): ModuleDefinition {
+  const definition = moduleDefinitions[name];
+  if (definition) return definition;
+  const fallback = moduleDefinitions["All Orders"];
+  if (!fallback) throw new Error("Default logistics module is unavailable.");
+  return fallback;
+}
+
 const descriptions: Record<string, string> = {
   "Create Order": "Capture pickup, delivery, package, payment and courier service details.",
   "Shipment Tracking": "Search shipment IDs and review timestamped tracking events.",

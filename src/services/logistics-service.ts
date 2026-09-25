@@ -1,5 +1,5 @@
 import type { ModuleDefinition, PortalRole } from "@/features/logistics/types";
-import { moduleDefinitions } from "@/features/logistics/mock-data";
+import { getModuleDefinition } from "@/features/logistics/mock-data";
 
 export interface LoginInput {
   email: string;
@@ -30,7 +30,7 @@ export class MockLogisticsService implements LogisticsService {
 
   async getModule(name: string): Promise<ModuleDefinition> {
     await new Promise((resolve) => setTimeout(resolve, 180));
-    return moduleDefinitions[name] ?? moduleDefinitions["All Orders"];
+    return getModuleDefinition(name);
   }
 }
 
