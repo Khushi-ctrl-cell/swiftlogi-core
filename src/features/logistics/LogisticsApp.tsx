@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, type FormEvent, type ReactNode } from "react";
 import {
   Activity, BadgeIndianRupee, Bell, Box, CalendarDays, ChartNoAxesCombined,
   CheckCircle2, ChevronDown, ChevronLeft, ChevronRight, CircleDollarSign,
@@ -49,7 +49,7 @@ function LoginScreen({ onLogin }: { onLogin: (role: PortalRole) => void }) {
   const [password, setPassword] = useState("operations");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const submit = async (event: React.FormEvent) => {
+  const submit = async (event: FormEvent) => {
     event.preventDefault();
     if (!email.includes("@") || password.length < 6) { setError("Enter a valid email and a password of at least 6 characters."); return; }
     setLoading(true); setError("");
@@ -122,7 +122,7 @@ function Dashboard({ role, onOpenOrders }: { role: PortalRole; onOpenOrders: () 
   </div>;
 }
 
-function Panel({ title, action, children, className = "" }: { title: string; action?: React.ReactNode; children: React.ReactNode; className?: string }) { return <section className={`panel ${className}`}><header><h2>{title}</h2>{action}</header>{children}</section>; }
+function Panel({ title, action, children, className = "" }: { title: string; action?: ReactNode; children: ReactNode; className?: string }) { return <section className={`panel ${className}`}><header><h2>{title}</h2>{action}</header>{children}</section>; }
 function PerformanceRows() { return <div className="metric-rows">{[["Delhivery","2,450","94%"],["BlueDart","1,980","92%"],["DTDC","1,650","88%"],["Ecom Express","1,420","86%"]].map((r) => <div key={r[0]}><strong>{r[0]}</strong><span>{r[1]} shipments</span><div><i style={{width:r[2]}} /></div><em>{r[2]}</em></div>)}</div>; }
 function PartnerRows() { return <div className="simple-rows">{[["ABC Logistics","2,450","1,980"],["FastMove","1,980","1,620"],["SpeedShip","1,650","1,210"],["MovePlus","1,420","1,160"]].map((r) => <div key={r[0]}><strong>{r[0]}</strong><span>{r[1]} orders</span><span>{r[2]} delivered</span></div>)}</div>; }
 function WalletRows() { return <div className="wallet-rows">{[["Main wallet","₹12,45,320","success"],["Partner wallets","₹25,60,000","success"],["Pending payouts","₹3,14,680","warning"],["Failed transactions","₹24,500","danger"]].map((r) => <div key={r[0]}><span className={`status-${r[2]}`}><CircleDollarSign /></span><p>{r[0]}</p><strong>{r[1]}</strong></div>)}</div>; }
