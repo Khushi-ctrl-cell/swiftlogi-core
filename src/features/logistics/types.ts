@@ -8,20 +8,46 @@ export interface NavGroup {
   items: string[];
 }
 
-export interface TableColumn {
+export interface HistoryEvent {
+  at: string;
+  label: string;
+  detail?: string;
+  by?: string;
+}
+
+export type FieldValue = string | number | boolean | null | undefined | HistoryEvent[] | string[];
+
+export interface EntityRecord {
+  id: string;
+  createdAt: string;
+  partnerId?: string;
+  [key: string]: FieldValue;
+}
+
+export type CollectionName =
+  | "accounts" | "partners" | "orders" | "transactions" | "rates" | "courierCharges" | "couriers"
+  | "remittances" | "ndr" | "rto" | "invoices" | "claims" | "disputes" | "audit" | "master"
+  | "warehouses" | "documents" | "bankDetails" | "settings" | "notifications";
+
+export type FieldType = "text" | "email" | "tel" | "number" | "date" | "select" | "textarea" | "file" | "password";
+
+export interface FieldDef {
   key: string;
   label: string;
+  type?: FieldType;
+  options?: string[];
+  required?: boolean;
+  span?: boolean;
+  placeholder?: string;
 }
 
-export interface TableRecord {
-  [key: string]: string | number;
-}
+export type FormValues = Record<string, string>;
 
-export interface ModuleDefinition {
-  title: string;
-  description: string;
-  action?: string;
-  columns: TableColumn[];
-  records: TableRecord[];
-  statuses?: string[];
+export interface SessionProfile {
+  accountId: string;
+  name: string;
+  email: string;
+  role: PortalRole;
+  partnerId?: string;
+  token?: string;
 }
